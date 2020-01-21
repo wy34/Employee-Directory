@@ -52,6 +52,15 @@ createGallery();
 createModal();
 
 
-fetch("https://randomuser.me/api/?format=json")
+fetch("https://randomuser.me/api?results=12") // returns promise with resolve value of a http response object
+    // since fetch doesnt catch http status errors, we have to check for that
+    .then(response => {
+        if (!response.ok) {
+            return Promise.reject(new Error(response.statusText))
+        } else {
+            return Promise.resolve(response)
+        }
+    })
     .then(response => response.json())
     .then(data => console.log(data))
+    .catch(error => console.log("nooooo", error));
