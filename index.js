@@ -1,9 +1,9 @@
 function createSearch() {
     let searchContainer = document.querySelector(".search-container"); 
     let html = `<form action="#" method="get">
-    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-    </form>`;
+                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+                </form>`;
     searchContainer.innerHTML = html;
 }
 
@@ -23,7 +23,6 @@ function createGallery() {
 }
 
 function createModal() {
-    let scriptTag = document.querySelector("[src='index.js']");
     let modalContainer = document.createElement("div");
     modalContainer.className = "modal-container";
     modalContainer.innerHTML = `<div class="modal">
@@ -48,7 +47,11 @@ function createModal() {
     document.body.insertBefore(modalContainer, document.querySelector("[src='index.js']"));
 }
 
-
 createSearch();
 createGallery();
 createModal();
+
+
+fetch("https://randomuser.me/api/?format=json")
+    .then(response => response.json())
+    .then(data => console.log(data))
