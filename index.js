@@ -1,16 +1,14 @@
-let searchContainer = document.querySelector(".search-container"); 
-let gallery = document.querySelector("#gallery");
-
-
 function createSearch() {
+    let searchContainer = document.querySelector(".search-container"); 
     let html = `<form action="#" method="get">
-                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-                </form>`;
+    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+    </form>`;
     searchContainer.innerHTML = html;
 }
 
 function createGallery() {
+    let gallery = document.querySelector("#gallery");
     let html = `<div class="card">
                     <div class="card-img-container">
                         <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
@@ -24,7 +22,33 @@ function createGallery() {
     gallery.innerHTML = html;
 }
 
+function createModal() {
+    let scriptTag = document.querySelector("[src='index.js']");
+    let modalContainer = document.createElement("div");
+    modalContainer.className = "modal-container";
+    modalContainer.innerHTML = `<div class="modal">
+                                    <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                                    <div class="modal-info-container">
+                                        <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                                        <h3 id="name" class="modal-name cap">name</h3>
+                                        <p class="modal-text">email</p>
+                                        <p class="modal-text cap">city</p>
+                                        <hr>
+                                        <p class="modal-text">(555) 555-5555</p>
+                                        <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+                                        <p class="modal-text">Birthday: 10/21/2015</p>
+                                    </div>
+                                </div>
+                                <div class="modal-btn-container">
+                                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                                </div>`
+
+    
+    document.body.insertBefore(modalContainer, document.querySelector("[src='index.js']"));
+}
 
 
 createSearch();
 createGallery();
+createModal();
