@@ -7,19 +7,22 @@ function createSearch() {
     searchContainer.innerHTML = html;
 }
 
-function createGallery() {
+function createGallery(numOfCards) {
     let gallery = document.querySelector("#gallery");
-    let html = `<div class="card">
-                    <div class="card-img-container">
-                        <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
-                    </div>
-                    <div class="card-info-container">
-                        <h3 id="name" class="card-name cap">first last</h3>
-                        <p class="card-text">email</p>
-                        <p class="card-text cap">city, state</p>
-                    </div>
-                </div>`
-    gallery.innerHTML = html;
+    let cardDiv;
+    for(let i = 0; i < numOfCards; i++) {
+        cardDiv = document.createElement("div");
+        cardDiv.className = "card";
+        cardDiv.innerHTML =  `<div class="card-img-container">
+                                <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+                              </div>
+                              <div class="card-info-container">
+                                <h3 id="name" class="card-name cap">first last</h3>
+                                <p class="card-text">email</p>
+                                <p class="card-text cap">city, state</p>
+                              </div>`
+        gallery.appendChild(cardDiv);
+    }
 }
 
 function createModal() {
@@ -42,13 +45,11 @@ function createModal() {
                                     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
                                     <button type="button" id="modal-next" class="modal-next btn">Next</button>
                                 </div>`
-
-    
     document.body.insertBefore(modalContainer, document.querySelector("[src='index.js']"));
 }
 
 createSearch();
-createGallery();
+createGallery(12);
 createModal();
 
 
