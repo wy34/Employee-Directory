@@ -83,11 +83,10 @@ fetch("https://randomuser.me/api?results=12") // returns promise with resolve va
 })
 .then(response => response.json())
 .then(data => {
-    createSearch();
-    createGallery(5);
-    createModal();
     data.results.map(person => {
-        //populateData(person);
+        // create a card for each person
+        // add their information to the card
+        // add them to the gallery
     });
 })
 .catch(error => console.log("nooooo", error));
