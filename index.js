@@ -7,13 +7,10 @@ function createSearch() {
     searchContainer.innerHTML = html;
 }
 
-function createGallery(numOfCards) {
-    let gallery = document.querySelector("#gallery");
-    let cardDiv;
-    for(let i = 0; i < numOfCards; i++) {
-        cardDiv = document.createElement("div");
-        cardDiv.className = "card";
-        cardDiv.innerHTML =  `<div class="card-img-container">
+function createCard(cardDiv) {
+    cardDiv = document.createElement("div");
+    cardDiv.className = "card";
+    cardDiv.innerHTML =  `<div class="card-img-container">
                                 <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
                               </div>
                               <div class="card-info-container">
@@ -21,8 +18,17 @@ function createGallery(numOfCards) {
                                 <p class="card-text">email</p>
                                 <p class="card-text cap">city, state</p>
                               </div>`
-        gallery.appendChild(cardDiv);
-    }
+    return cardDiv;
+}
+
+function createGallery(numOfCards) {
+    let gallery = document.querySelector("#gallery");
+    let cardDiv;
+    for(let i = 0; i < numOfCards; i++) {
+        let card = createCard(cardDiv);
+        gallery.appendChild(card);
+    };
+    // gallery.style.display = "none"
 }
 
 function createModal() {
@@ -48,20 +54,52 @@ function createModal() {
     document.body.insertBefore(modalContainer, document.querySelector("[src='index.js']"));
 }
 
-createSearch();
-createGallery(12);
-createModal();
+function populateData(data) {
+    // let picture = data.picture.thumbnail;
+    // let name = `${data.name.first} ${data.name.last}`;
+    // let email = data.email;
+    // let location = `${data.location.city}, ${data.location.state}`
+
+    let cards = document.querySelectorAll(".card");
+    for(let i = 0; i < cards.length; i++) {
+        
+    }
+    document.querySelector("#gallery").style.display = "flex"
+}
 
 
+
+
+
+/*Fetched Data*/
 fetch("https://randomuser.me/api?results=12") // returns promise with resolve value of a http response object
-    // since fetch doesnt catch http status errors, we have to check for that
-    .then(response => {
-        if (!response.ok) {
-            return Promise.reject(new Error(response.statusText))
-        } else {
-            return Promise.resolve(response)
-        }
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log("nooooo", error));
+// since fetch doesnt catch http status errors, we have to check for that
+.then(response => {
+    if (!response.ok) {
+        return Promise.reject(new Error(response.statusText))
+    } else {
+        return Promise.resolve(response)
+    }
+})
+.then(response => response.json())
+.then(data => {
+    createSearch();
+    createGallery(5);
+    createModal();
+    data.results.map(person => {
+        //populateData(person);
+    });
+})
+.catch(error => console.log("nooooo", error));
+
+
+
+
+
+
+
+
+
+
+
+
