@@ -7,7 +7,7 @@ function createSearch() {
     searchContainer.innerHTML = html;
 }
 
-function createCard(cardDiv, pictureSrc, fullName, email, city, state/*, phone, fullAddress, birth*/) {
+function createCard(cardDiv, pictureSrc, fullName, email, city, state, phone, fullAddress, birth) {
     cardDiv = document.createElement("div");
     cardDiv.className = "card";
     cardDiv.innerHTML =  `<div class="card-img-container">
@@ -18,16 +18,21 @@ function createCard(cardDiv, pictureSrc, fullName, email, city, state/*, phone, 
                                 <p class="card-text">${email}</p>
                                 <p class="card-text cap">${city}, ${state}</p>
                               </div>`
-    openAndCloseModal(cardDiv)
+    openAndCloseModal(cardDiv, pictureSrc, fullName, email, city, state, phone, fullAddress, birth)
     return cardDiv;
 }
        
 
-
-
-function openAndCloseModal(cardDiv) {
+function openAndCloseModal(cardDiv, pictureSrc, fullName, email, city, state, phone, fullAddress, birth) {
     let modalContainer = document.querySelector(".modal-container");
     cardDiv.addEventListener("click", function() {
+        document.querySelector(".modal-img").src = pictureSrc;
+        document.querySelector(".modal-name").textContent = fullName;
+        document.querySelector(".modal-text:nth-of-type(1)").textContent = email;
+        document.querySelector(".modal-text:nth-of-type(2)").textContent = city; 
+        document.querySelector(".modal-text:nth-of-type(3)").textContent = phone;
+        document.querySelector(".modal-text:nth-of-type(4)").textContent = fullAddress;
+        document.querySelector(".modal-text:nth-of-type(3)").textContent = birth;
         modalContainer.style.display = "block";
     })
     modalContainer.querySelector(".modal-close-btn").addEventListener("click", function() {
@@ -92,11 +97,11 @@ fetch("https://randomuser.me/api?results=12") // returns promise with resolve va
         let email = person.email;
         let city = `${person.location.city}`
         let state = `${person.location.state}`;
-        // let fullAddress = `${person.location.street.number} ${person.location.street.name}, ${city} ${state} ${person.location.postcode}`
-        // let phone = person.phone;
-        // let birth = formatDate(person.dob.date);
+        let fullAddress = `${person.location.street.number} ${person.location.street.name}, ${city} ${state} ${person.location.postcode}`
+        let phone = person.phone;
+        let birth = formatDate(person.dob.date);
 
-        let card = createCard(cardDiv, picture, name, email, city, state/*, phone, fullAddress, birth*/);
+        let card = createCard(cardDiv, picture, name, email, city, state, phone, fullAddress, birth);
         document.querySelector("#gallery").appendChild(card)
     });
 })
