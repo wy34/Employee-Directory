@@ -7,29 +7,20 @@ function createSearch() {
     searchContainer.innerHTML = html;
 }
 
-function createCard(cardDiv) {
+function createCard(cardDiv, pictureSrc, fullName, email, location) {
     cardDiv = document.createElement("div");
     cardDiv.className = "card";
     cardDiv.innerHTML =  `<div class="card-img-container">
-                                <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+                                <img class="card-img" src="${pictureSrc}" alt="profile picture">
                               </div>
                               <div class="card-info-container">
-                                <h3 id="name" class="card-name cap">first last</h3>
-                                <p class="card-text">email</p>
-                                <p class="card-text cap">city, state</p>
+                                <h3 id="name" class="card-name cap">${fullName}</h3>
+                                <p class="card-text">${email}</p>
+                                <p class="card-text cap">${location}</p>
                               </div>`
     return cardDiv;
 }
 
-function createGallery(numOfCards) {
-    let gallery = document.querySelector("#gallery");
-    let cardDiv;
-    for(let i = 0; i < numOfCards; i++) {
-        let card = createCard(cardDiv);
-        gallery.appendChild(card);
-    };
-    // gallery.style.display = "none"
-}
 
 function createModal() {
     let modalContainer = document.createElement("div");
@@ -54,18 +45,6 @@ function createModal() {
     document.body.insertBefore(modalContainer, document.querySelector("[src='index.js']"));
 }
 
-function populateData(data) {
-    // let picture = data.picture.thumbnail;
-    // let name = `${data.name.first} ${data.name.last}`;
-    // let email = data.email;
-    // let location = `${data.location.city}, ${data.location.state}`
-
-    let cards = document.querySelectorAll(".card");
-    for(let i = 0; i < cards.length; i++) {
-        
-    }
-    document.querySelector("#gallery").style.display = "flex"
-}
 
 
 
@@ -83,10 +62,15 @@ fetch("https://randomuser.me/api?results=12") // returns promise with resolve va
 })
 .then(response => response.json())
 .then(data => {
+    let cardDiv;
     data.results.map(person => {
-        // create a card for each person
-        // add their information to the card
-        // add them to the gallery
+        let picture = person.picture.thumbnail;
+        let name = `${person.name.first} ${person.name.last}`;
+        let email = person.email;
+        let location = `${person.location.city}, ${person.location.state}`;
+
+        let card = createCard(cardDiv, picture, name, email, location);
+        document.querySelector("#gallery").appendChild(card)
     });
 })
 .catch(error => console.log("nooooo", error));
