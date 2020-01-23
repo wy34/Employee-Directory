@@ -32,7 +32,7 @@ function openAndCloseModal(cardDiv, pictureSrc, fullName, email, city, state, ph
         document.querySelector(".modal-text:nth-of-type(2)").textContent = city; 
         document.querySelector(".modal-text:nth-of-type(3)").textContent = phone;
         document.querySelector(".modal-text:nth-of-type(4)").textContent = fullAddress;
-        document.querySelector(".modal-text:nth-of-type(3)").textContent = birth;
+        document.querySelector(".modal-text:nth-of-type(5)").textContent = birth;
         modalContainer.style.display = "block";
     })
     modalContainer.querySelector(".modal-close-btn").addEventListener("click", function() {
