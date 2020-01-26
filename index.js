@@ -25,6 +25,7 @@ function createCard(cardDiv, pictureSrc, fullName, email, city, state, phone, fu
 
 function openAndCloseModal(cardDiv, pictureSrc, fullName, email, city, state, phone, fullAddress, birth) {
     let modalContainer = document.querySelector(".modal-container");
+
     cardDiv.addEventListener("click", function() {
         document.querySelector(".modal-img").src = pictureSrc;
         document.querySelector(".modal-name").textContent = fullName;
@@ -110,6 +111,32 @@ fetch("https://randomuser.me/api?format=json&results=12&nat=us") // returns prom
     return cardArray
 })
 .then(results => {
+    let prev = document.querySelector("#modal-prev");
+    let next = document.querySelector("#modal-next");
+
+    
+    let modal = document.querySelector(".modal");
+    let currentCard = results.find(card => card.innerHTML.includes(modal.querySelector("#name").textContent))
+    let currentIndex = results.indexOf(currentCard);
+    console.log(currentIndex)
+    
+    // prev.addEventListener("click", function() {
+    //     if (currentIndex !== 0) {
+    //         //document.querySelector(".modal-img").src = results[currentIndex - 1].querySelector("img").src;
+    //         // document.querySelector(".modal-name").textContent = fullName;
+    //         // document.querySelector(".modal-text:nth-of-type(1)").textContent = email;
+    //         // document.querySelector(".modal-text:nth-of-type(2)").textContent = city; 
+    //         // document.querySelector(".modal-text:nth-of-type(3)").textContent = phone;
+    //         // document.querySelector(".modal-text:nth-of-type(4)").textContent = fullAddress;
+    //         // document.querySelector(".modal-text:nth-of-type(5)").textContent = birth;
+    //     } else {
+    //         this.style.backgroundColor = 'red'
+    //     }
+    // })
+
+
+    
+
     document.querySelector("#search-input").addEventListener("input", function() {
         let filteredData = results.forEach(person => {
             let name = person.querySelector("#name");
