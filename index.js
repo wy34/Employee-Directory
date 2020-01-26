@@ -43,7 +43,6 @@ function openAndCloseModal(cardDiv, pictureSrc, fullName, email, city, state, ph
 
 function createModal() {
     let modalContainer = document.createElement("div");
-    modalContainer.style.display = "none";
     modalContainer.className = "modal-container";
     modalContainer.innerHTML = `<div class="modal">
                                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -78,7 +77,7 @@ function formatDate(dateString) {
 
 
 /*Fetched Data*/
-fetch("https://randomuser.me/api?results=12") // returns promise with resolve value of a http response object
+fetch("https://randomuser.me/api?format=json&results=12&nat=us") // returns promise with resolve value of a http response object
 // since fetch doesnt catch http status errors, we have to check for that
 .then(response => {
     if (!response.ok) {
@@ -89,9 +88,12 @@ fetch("https://randomuser.me/api?results=12") // returns promise with resolve va
 })
 .then(response => response.json())
 .then(data => {
-    createModal();
     let cardDiv;
-    data.results.map(person => {
+    let cardArray = [];
+    createSearch();
+    createModal();
+
+    data.results.forEach(person => {
         let picture = person.picture.thumbnail;
         let name = `${person.name.first} ${person.name.last}`;
         let email = person.email;
@@ -100,16 +102,29 @@ fetch("https://randomuser.me/api?results=12") // returns promise with resolve va
         let fullAddress = `${person.location.street.number} ${person.location.street.name}, ${city} ${state} ${person.location.postcode}`
         let phone = person.phone;
         let birth = formatDate(person.dob.date);
-
+        
         let card = createCard(cardDiv, picture, name, email, city, state, phone, fullAddress, birth);
+        cardArray.push(card);
         document.querySelector("#gallery").appendChild(card)
+    });
+    return cardArray
+})
+.then(results => {
+    document.querySelector("#search-input").addEventListener("input", function() {
+        let filteredData = results.forEach(person => {
+            let name = person.querySelector("#name");
+           if (!name.innerHTML.toLowerCase().includes(this.value.toLowerCase())) {
+                person.style.display = "none"
+           } else {
+               person.style.display = "flex"
+           }
+        })
     });
 })
 .catch(error => console.log("nooooo", error));
 
 
      
-
 
 
 
